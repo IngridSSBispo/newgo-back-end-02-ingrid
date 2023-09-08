@@ -3,13 +3,24 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
   <servlet>
     <servlet-name>primeiraServlet</servlet-name>
     <servlet-class>br.com.desafiobackend.PrimeiraServlet</servlet-class>
+
+    <servlet-name>listProducts</servlet-name>
+    <servlet-class>br.com.desafiobackend.ListProducts</servlet-class>
+
   </servlet>
+
   <servlet-mapping>
     <servlet-name>primeiraServlet</servlet-name>
     <url-pattern>/primeiraServlet</url-pattern>
-    <url-pattern>/TestedaServlet</url-pattern>
+
+    <servlet-name>listProducts</servlet-name>
+    <url-pattern>/listProducts</url-pattern>
+
+
   </servlet-mapping>
+
 </web-app>
