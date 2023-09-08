@@ -1,12 +1,11 @@
 package produtos;
 
-import dao.ProdutoDAO;
-
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
 public class Produto {
-    private Long id;
+    private int id;
     private UUID hash;
     private String nome;
     private String descricao;
@@ -14,11 +13,11 @@ public class Produto {
     private double preco;
     private int quantidade;
     private int estoque_min;
-    private Date dtcreate;
-    private Date dtupdate;
+    private LocalDateTime dtcreate;
+    private LocalDateTime dtupdate;
     private Boolean ativo;
 
-    public Produto(Long id, UUID hash, String nome, String descricao, String ean13, double preco, int quantidade, int estoque_min, Date dtcreate, Date dtupdate, Boolean ativo) {
+    public Produto(int id, UUID hash, String nome, String descricao, String ean13, double preco, int quantidade, int estoque_min, LocalDateTime dtcreate, LocalDateTime dtupdate, Boolean ativo) {
         this.id = id;
         this.hash = hash;
         this.nome = nome;
@@ -32,11 +31,11 @@ public class Produto {
         this.ativo = ativo;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -96,19 +95,19 @@ public class Produto {
         this.estoque_min = estoque_min;
     }
 
-    public Date getDtcreate() {
+    public LocalDateTime getDtcreate() {
         return dtcreate;
     }
 
-    public void setDtcreate(Date dtcreate) {
+    public void setDtcreate(LocalDateTime dtcreate) {
         this.dtcreate = dtcreate;
     }
 
-    public Date getDtupdate() {
+    public LocalDateTime getDtupdate() {
         return dtupdate;
     }
 
-    public void setDtupdate(Date dtupdate) {
+    public void setDtupdate(LocalDateTime dtupdate) {
         this.dtupdate = dtupdate;
     }
 
