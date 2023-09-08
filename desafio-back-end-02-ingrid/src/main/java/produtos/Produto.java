@@ -1,3 +1,7 @@
+package produtos;
+
+import dao.ProdutoDAO;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -115,6 +119,8 @@ public class Produto {
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }
+
+
 }
 
 
