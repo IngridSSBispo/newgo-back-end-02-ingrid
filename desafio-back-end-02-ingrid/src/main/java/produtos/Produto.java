@@ -17,7 +17,7 @@ public class Produto {
     private LocalDateTime dtupdate;
     private Boolean ativo;
 
-    public Produto(int id, UUID hash, String nome, String descricao, String ean13, double preco, int quantidade, int estoque_min, LocalDateTime dtcreate, LocalDateTime dtupdate, Boolean ativo) {
+    public Produto(UUID hash, String nome, String descricao, String ean13, double preco, int quantidade, int estoque_min, LocalDateTime dtcreate, LocalDateTime dtupdate, Boolean ativo) {
         this.id = id;
         this.hash = hash;
         this.nome = nome;
