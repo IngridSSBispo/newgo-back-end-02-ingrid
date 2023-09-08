@@ -1,6 +1,7 @@
 package br.com.desafiobackend;
 
 import com.google.gson.Gson;
+import dao.ProdutoDAO;
 import produtos.Produto;
 
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,6 @@ public class CreateProduct extends HttpServlet {
 
 
         Produto produto = new Produto(
-                1,
                 UUID.randomUUID(),
                 "Sabão",
                 "sabão liquido",
@@ -31,6 +31,8 @@ public class CreateProduct extends HttpServlet {
                 true
         );
 
+        ProdutoDAO produtodao = new ProdutoDAO();
+        boolean success = produtodao.createProduct(produto);
 
         String result = new Gson().toJson(produto);
 
