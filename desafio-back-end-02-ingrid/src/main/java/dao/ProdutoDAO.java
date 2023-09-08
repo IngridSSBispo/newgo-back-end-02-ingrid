@@ -11,13 +11,11 @@ public class ProdutoDAO {
     public String getAllProducts()  {
         String result = "";
        try {
+           String sql = "select * from produtos;";
            Connection conn = PostgreSQLJDBC.getConnection();
-
            conn.setAutoCommit(false);
-
            Statement stmt = conn.createStatement();
-
-           ResultSet rs = stmt.executeQuery("select nome from produtos;");
+           ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()){
                 result = rs.getString("nome");
@@ -34,7 +32,6 @@ public class ProdutoDAO {
 
         return result;
     }
-
 
     public boolean createProduct(Produto produto){
         boolean success = false;
@@ -68,6 +65,27 @@ public class ProdutoDAO {
         }
 
         return success;
+    }
+
+    public boolean updateProduct(Produto produto){
+        boolean result = false;
+        String sql = "UPDATE public.produtos " +
+                "SET hash=?, nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=?, dtcreate=?, dtupdate=?, lativo=? " +
+                "WHERE id_produto = " + produto.getId() + ";";
+        //https://www.postgresqltutorial.com/postgresql-jdbc/update/
+
+
+
+        return result;
+    }
+
+    public boolean deleteProduct(int id_produto){
+        boolean result = false;
+        String sql = "DELETE FROM public.produtos " +
+                "WHERE id_produto = " + id_produto + ";";
+        //https://www.postgresqltutorial.com/postgresql-jdbc/delete/
+
+        return result;
     }
 
 }
