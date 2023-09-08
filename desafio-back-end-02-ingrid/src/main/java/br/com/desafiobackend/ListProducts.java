@@ -20,7 +20,6 @@ public class ListProducts extends HttpServlet {
 
 
         Produto produto = new Produto(
-                1,
                 UUID.randomUUID(),
                 "Sabão",
                 "sabão liquido",
@@ -28,8 +27,6 @@ public class ListProducts extends HttpServlet {
                 10.00,
                 1,
                 10,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
                 true
         );
 
