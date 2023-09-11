@@ -14,6 +14,9 @@
     <servlet-name>createProduct</servlet-name>
     <servlet-class>br.com.desafiobackend.CreateProduct</servlet-class>
 
+    <servlet-name>deleteProduct</servlet-name>
+    <servlet-class>br.com.desafiobackend.DeleteProduct</servlet-class>
+
   </servlet>
 
   <servlet-mapping>
@@ -26,6 +29,8 @@
     <servlet-name>createProduct</servlet-name>
     <url-pattern>/createProduct</url-pattern>
 
+    <servlet-name>deleteProduct</servlet-name>
+    <url-pattern>/deleteProduct</url-pattern>
 
   </servlet-mapping>
 
