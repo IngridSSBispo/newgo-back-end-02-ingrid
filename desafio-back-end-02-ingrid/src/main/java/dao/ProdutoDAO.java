@@ -68,34 +68,9 @@ public class ProdutoDAO {
     }
 
     public boolean updateProduct(int id_produto){
-        boolean result = false;
-        String sql = "UPDATE FROm produtos " +
-                "SET hash=?, nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=?, dtcreate=?, dtupdate=?, lativo=? " +
-                "WHERE id_produto = ? "  + ";";
-
-        int affectedrows = 0;
-
-        try {
-            Connection conn = PostgreSQLJDBC.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-
-            pstmt.setInt(1, id_produto);
-
-            affectedrows = pstmt.executeUpdate();
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        if (affectedrows > 0)
-            return true;
-        else
-            return false;
 
 
-        //https://www.postgresqltutorial.com/postgresql-jdbc/update/
-
-
+        return false;
     }
 
     public boolean deleteProduct(int id_produto){
