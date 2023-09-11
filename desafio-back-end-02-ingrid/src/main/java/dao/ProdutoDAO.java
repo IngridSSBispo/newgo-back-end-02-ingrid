@@ -80,12 +80,30 @@ public class ProdutoDAO {
     }
 
     public boolean deleteProduct(int id_produto){
-        boolean result = false;
-        String sql = "DELETE FROM public.produtos " +
-                "WHERE id_produto = " + id_produto + ";";
-        //https://www.postgresqltutorial.com/postgresql-jdbc/delete/
 
-        return result;
+        boolean result = false;
+        String sql = "DELETE FROM produtos " +
+                "WHERE id_produto = ? ;";
+
+        int affectedrows = 0;
+
+        try {
+            Connection conn = PostgreSQLJDBC.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, id_produto);
+
+            affectedrows = pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (affectedrows > 0)
+            return true;
+        else
+            return false;
+
     }
 
 }
