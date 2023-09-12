@@ -17,16 +17,20 @@ public class Produto {
     private LocalDateTime dtupdate;
     private Boolean ativo;
 
-    public Produto(UUID hash, String nome, String descricao, String ean13, double preco, int quantidade, int estoque_min, Boolean ativo) {
+    public Produto( String nome, String descricao, String ean13, double preco,
+                   int quantidade, int estoque_min) {
+
+        if(preco < 0 || quantidade < 0 || estoque_min < 0){
+            throw new IllegalArgumentException("Valores não podem ser negativos");
+        }
         this.id = id;
-        this.hash = hash;
+        this.hash = UUID.randomUUID();
         this.nome = nome;
         this.descricao = descricao;
         this.ean13 = ean13;
         this.preco = preco;
         this.quantidade = quantidade;
         this.estoque_min = estoque_min;
-        this.ativo = ativo;
     }
 
     public int getId() {
