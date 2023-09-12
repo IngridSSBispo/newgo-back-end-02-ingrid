@@ -49,14 +49,12 @@ public class CreateProduct extends HttpServlet {
 
 
         Produto produto = new Produto(
-                UUID.randomUUID(),
                 nome,
                 descricao,
                 ean13,
                 Double.parseDouble(preco),
                 Integer.parseInt(quantidade),
-                Integer.parseInt(estoque_min),
-                true
+                Integer.parseInt(estoque_min)
         );
 
         ProdutoDAO produtodao = new ProdutoDAO();
