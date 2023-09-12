@@ -4,6 +4,9 @@ import dao.conn.PostgreSQLJDBC;
 import produtos.Produto;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+
+import static jdk.nashorn.internal.objects.NativeDate.setDate;
 
 public class ProdutoDAO {
 
@@ -37,7 +40,7 @@ public class ProdutoDAO {
         int quantidade = 0;
         try {
             String sql = "select count(*) as total from produtos where " + key + " = '" + value + "'; ";
-            System.out.println(sql);
+
             Connection conn = PostgreSQLJDBC.getConnection();
             conn.setAutoCommit(false);
             Statement stmt = conn.createStatement();
@@ -46,7 +49,6 @@ public class ProdutoDAO {
             while (rs.next()){
                 quantidade = rs.getInt("total");
             }
-
 
             rs.close();
             stmt.close();
@@ -83,7 +85,9 @@ public class ProdutoDAO {
             stmt.setDouble(5, produto.getPreco());
             stmt.setInt(6,produto.getQuantidade());
             stmt.setInt(7, produto.getEstoque_min());
-            stmt.setBoolean(8, produto.getAtivo());
+            stmt.setBoolean(8, true);
+
+            System.out.println(sql);
 
             stmt.executeUpdate();
             
@@ -98,8 +102,8 @@ public class ProdutoDAO {
 
     public boolean updateProduct(int id_produto,Produto produto){
         boolean result = false;
-        String sql = "UPDATE FROM produtos " +
-                "SET  nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=? " +
+        String sql = "UPDATE produtos " +
+                "SET  nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=?, dtupdate =? " +
                 "WHERE id_produto = " + id_produto  + ";";
 
         int affectedrows = 0;
@@ -114,6 +118,7 @@ public class ProdutoDAO {
             pstmt.setDouble(4,produto.getPreco());
             pstmt.setInt(5,produto.getQuantidade());
             pstmt.setInt(6,produto.getEstoque_min());
+            pstmt.setTimestamp(7, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
 
             affectedrows = pstmt.executeUpdate();
 
@@ -155,4 +160,91 @@ public class ProdutoDAO {
 
     }
 
+    public boolean updateByKey(int id_produto, String key, String value) {
+
+        String sql = "UPDATE produtos " +
+                "SET " + key + " = ?, dtupdate = ? " +
+                "WHERE id_produto = " + id_produto  + ";";
+
+        int affectedrows = 0;
+
+        try {
+            Connection conn = PostgreSQLJDBC.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, value);
+            pstmt.setTimestamp(2, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
+            affectedrows = pstmt.executeUpdate();
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (affectedrows > 0)
+            return true;
+        else
+            return false;
+
+    }
+
+    public boolean updateByKey(int id_produto, String key, int value) {
+
+        String sql = "UPDATE produtos " +
+                "SET " + key + " = ?, dtupdate = ? " +
+                "WHERE id_produto = " + id_produto  + ";";
+
+        int affectedrows = 0;
+
+        try {
+            Connection conn = PostgreSQLJDBC.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, value);
+            pstmt.setTimestamp(2, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
+
+
+            affectedrows = pstmt.executeUpdate();
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (affectedrows > 0)
+            return true;
+        else
+            return false;
+
+    }
+
+    public boolean updateByKey(int id_produto, String key, double value) {
+
+        String sql = "UPDATE produtos " +
+                "SET " + key + " = ?, dtupdate = ? "+
+                "WHERE id_produto = " + id_produto  + ";";
+
+        int affectedrows = 0;
+
+        try {
+            Connection conn = PostgreSQLJDBC.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setDouble(1, value);
+            pstmt.setTimestamp(2, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
+
+
+            affectedrows = pstmt.executeUpdate();
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (affectedrows > 0)
+            return true;
+        else
+            return false;
+
+    }
 }
