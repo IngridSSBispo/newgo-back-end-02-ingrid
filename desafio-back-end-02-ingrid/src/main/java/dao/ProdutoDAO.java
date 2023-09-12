@@ -33,6 +33,35 @@ public class ProdutoDAO {
         return result;
     }
 
+    public boolean checkIfExists(String key,String value){
+        int quantidade = 0;
+        try {
+            String sql = "select count(*) as total from produtos where " + key + " = '" + value + "'; ";
+            System.out.println(sql);
+            Connection conn = PostgreSQLJDBC.getConnection();
+            conn.setAutoCommit(false);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()){
+                quantidade = rs.getInt("total");
+            }
+
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(quantidade > 0)
+            return true;
+        else
+            return false;
+    }
+
     public boolean createProduct(Produto produto){
         boolean success = false;
 
@@ -67,11 +96,11 @@ public class ProdutoDAO {
         return success;
     }
 
-    public boolean updateProduct(int id_produto){
+    public boolean updateProduct(int id_produto,Produto produto){
         boolean result = false;
         String sql = "UPDATE FROM produtos " +
-                "SET hash=?, nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=?, dtcreate=?, dtupdate=?, lativo=? " +
-                "WHERE id_produto = ? "  + ";";
+                "SET  nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=? " +
+                "WHERE id_produto = " + id_produto  + ";";
 
         int affectedrows = 0;
 
@@ -79,7 +108,12 @@ public class ProdutoDAO {
             Connection conn = PostgreSQLJDBC.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(1, id_produto);
+            pstmt.setString(1,produto.getNome());
+            pstmt.setString(2,produto.getDescricao());
+            pstmt.setString(3,produto.getEan13());
+            pstmt.setDouble(4,produto.getPreco());
+            pstmt.setInt(5,produto.getQuantidade());
+            pstmt.setInt(6,produto.getEstoque_min());
 
             affectedrows = pstmt.executeUpdate();
 
@@ -91,10 +125,6 @@ public class ProdutoDAO {
             return true;
         else
             return false;
-
-
-
-
 
     }
 
