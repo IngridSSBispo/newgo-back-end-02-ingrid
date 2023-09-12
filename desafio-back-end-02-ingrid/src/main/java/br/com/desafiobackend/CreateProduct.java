@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 
-
 public class CreateProduct extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -35,14 +34,27 @@ public class CreateProduct extends HttpServlet {
         String preco = request.getParameter("preco");
         String quantidade = request.getParameter("quantidade");
         String estoque_min = request.getParameter("estoque_min");
+        int estoque_min_convertido = 0;
+        double preco_convertido = 0;
+        int quantidade_convertida = 0;
+
+        if (estoque_min != null)
+            estoque_min_convertido = Integer.parseInt(estoque_min);
+
+        if (preco != null) {
+            preco_convertido = Double.parseDouble(preco);
+        }
+        if (quantidade != null)
+            quantidade_convertida = Integer.parseInt(quantidade);
+
 
         Produto produto = new Produto(
                 nome,
                 descricao,
                 ean13,
-                Double.parseDouble(preco),
-                Integer.parseInt(quantidade),
-                Integer.parseInt(estoque_min)
+                preco_convertido,
+                quantidade_convertida,
+                estoque_min_convertido
         );
 
         ProdutoDAO produtodao = new ProdutoDAO();
@@ -50,7 +62,7 @@ public class CreateProduct extends HttpServlet {
         boolean existNome = produtodao.checkIfExists("nome", nome);
         boolean existEan13 = produtodao.checkIfExists("ean13", ean13);
 
-        if(existNome || existEan13){
+        if (existNome || existEan13) {
             writer.println("Produto ja foi cadastrado anteriormente!");
         } else {
             boolean success = produtodao.createProduct(produto);
@@ -62,7 +74,6 @@ public class CreateProduct extends HttpServlet {
             writer.print(result);
             writer.flush();
         }
-
 
 
     }
