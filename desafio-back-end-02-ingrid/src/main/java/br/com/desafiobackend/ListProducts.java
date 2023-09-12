@@ -17,14 +17,12 @@ public class ListProducts extends HttpServlet {
 
 
         Produto produto = new Produto(
-                UUID.randomUUID(),
                 "Sabão",
                 "sabão liquido",
                 "12345678978",
                 10.00,
                 1,
-                10,
-                true
+                10
         );
 
 
