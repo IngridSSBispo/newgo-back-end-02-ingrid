@@ -1,7 +1,5 @@
 package produtos;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 public class Produto {
@@ -23,6 +21,7 @@ public class Produto {
         if(preco < 0 || quantidade < 0 || estoque_min < 0){
             throw new IllegalArgumentException("Valores não podem ser negativos");
         }
+
         this.id = id;
         this.hash = UUID.randomUUID();
         this.nome = nome;
