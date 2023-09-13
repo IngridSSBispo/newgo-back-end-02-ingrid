@@ -109,7 +109,7 @@ public class ProdutoDAO {
 
             String sql = "INSERT INTO produtos( " +
                     "hash, nome, descricao, ean13, preco, quantidade, estoque_min, lativo) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?); ";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?);  ";
 
             PreparedStatement stmt = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
@@ -123,8 +123,17 @@ public class ProdutoDAO {
             stmt.setInt(7, produto.getEstoque_min());
             stmt.setBoolean(8, false);
 
+            int affectedRows = stmt.executeUpdate();
 
-            stmt.executeUpdate();
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+
+                if (generatedKeys.next()) {
+                    produto.setId(generatedKeys.getInt("id_produto"));
+
+                }
+            }
+
 
             success = true;
 
