@@ -35,15 +35,15 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>createProduct</servlet-name>
-    <url-pattern>/createProduct</url-pattern>
+    <url-pattern>/createProducts</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>deleteProduct</servlet-name>
-    <url-pattern>/deleteProduct</url-pattern>
+    <url-pattern>/deleteProducts</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>updateProduct</servlet-name>
-    <url-pattern>/updateProduct</url-pattern>
+    <url-pattern>/updateProducts</url-pattern>
   </servlet-mapping>
 
 
