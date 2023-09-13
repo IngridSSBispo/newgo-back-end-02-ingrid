@@ -1,18 +1,16 @@
 package br.com.desafiobackend;
-
 import dao.ProdutoDAO;
-import produtos.Produto;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 public class UpdateProduct extends HttpServlet {
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int id_produto = Integer.parseInt(request.getParameter("id_produto"));
+        UUID hash = UUID.fromString(request.getParameter("hash"));
         String descricao = request.getParameter("descricao");
         String preco = request.getParameter("preco");
         String quantidade = request.getParameter("quantidade");
@@ -39,36 +37,36 @@ public class UpdateProduct extends HttpServlet {
         // Não permitir alterar as informações de id, hash, nome, ean13, dtcreate, dtupdate.
 
 
-        updateByKey(id_produto, "descricao", descricao);
-        updateByKey(id_produto, "preco", precoConvertido);
-        updateByKey(id_produto, "quantidade", quantidadeConvertida);
-        updateByKey(id_produto, "estoque_min", estoque_minConvertido);
+        updateByKey(hash, "descricao", descricao);
+        updateByKey(hash, "preco", precoConvertido);
+        updateByKey(hash, "quantidade", quantidadeConvertida);
+        updateByKey(hash, "estoque_min", estoque_minConvertido);
 
         writer.println("Produto alterado com sucesso");
 
 
     }
 
-    protected void updateByKey(int id_produto, String key, String value) {
+    protected void updateByKey(UUID hash, String key, String value) {
         ProdutoDAO produtodao = new ProdutoDAO();
 
         if (value != null && !value.isEmpty())
-            produtodao.updateByKey(id_produto, key, value);
+            produtodao.updateByKey(hash, key, value);
         else
             System.out.println("Campo descricao não pode ser vazio!");
     }
 
-    protected void updateByKey(int id_produto, String key, int value) {
+    protected void updateByKey(UUID hash, String key, int value) {
         ProdutoDAO produtodao = new ProdutoDAO();
 
         if (value > 0)
-            produtodao.updateByKey(id_produto, key, value);
+            produtodao.updateByKey(hash, key, value);
     }
 
-    protected void updateByKey(int id_produto, String key, double value) {
+    protected void updateByKey(UUID hash, String key, double value) {
         ProdutoDAO produtodao = new ProdutoDAO();
 
         if (value > 0)
-            produtodao.updateByKey(id_produto, key, value);
+            produtodao.updateByKey(hash, key, value);
     }
 }
