@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 public class DeleteProduct extends HttpServlet {
 
@@ -13,10 +14,10 @@ public class DeleteProduct extends HttpServlet {
         PrintWriter writer = response.getWriter();
 
 
-        int id_produto = Integer.parseInt(request.getParameter("id_produto"));
+       UUID hash = UUID.fromString(request.getParameter("hash"));
 
         ProdutoDAO produtodao = new ProdutoDAO();
-        boolean success = produtodao.deleteProduct(id_produto);
+        boolean success = produtodao.deleteProduct(hash);
 
         if (success){
             writer.println("Produto excluido com sucesso");
