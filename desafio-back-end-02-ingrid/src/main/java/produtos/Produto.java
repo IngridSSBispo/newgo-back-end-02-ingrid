@@ -13,7 +13,7 @@ public class Produto {
     private int estoque_min;
     private LocalDateTime dtcreate;
     private LocalDateTime dtupdate;
-    private Boolean ativo;
+    private Boolean lativo;
 
     public Produto( String nome, String descricao, String ean13, double preco,
                    int quantidade, int estoque_min) {
@@ -112,12 +112,12 @@ public class Produto {
         this.dtupdate = dtupdate;
     }
 
-    public Boolean getAtivo() {
-        return ativo;
+    public Boolean getLativo() {
+        return lativo;
     }
 
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
+    public void setLativo(Boolean lativo) {
+        this.lativo = lativo;
     }
 
 
