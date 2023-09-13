@@ -1,12 +1,10 @@
 package dao;
-
 import dao.conn.PostgreSQLJDBC;
 import produtos.Produto;
-
 import java.sql.*;
-import java.time.LocalDateTime;
+import java.util.UUID;
 
-import static jdk.nashorn.internal.objects.NativeDate.setDate;
+
 
 public class ProdutoDAO {
 
@@ -87,7 +85,7 @@ public class ProdutoDAO {
             stmt.setInt(7, produto.getEstoque_min());
             stmt.setBoolean(8, true);
 
-            System.out.println(sql);
+
 
             stmt.executeUpdate();
             
@@ -100,11 +98,11 @@ public class ProdutoDAO {
         return success;
     }
 
-    public boolean updateProduct(int id_produto,Produto produto){
+    public boolean updateProduct(int hash,Produto produto){
         boolean result = false;
         String sql = "UPDATE produtos " +
                 "SET  nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=?, dtupdate =? " +
-                "WHERE id_produto = " + id_produto  + ";";
+                "WHERE hash = " + hash  + ";";
 
         int affectedrows = 0;
 
@@ -133,11 +131,11 @@ public class ProdutoDAO {
 
     }
 
-    public boolean deleteProduct(int id_produto){
+    public boolean deleteProduct(UUID hash){
 
         boolean result = false;
         String sql = "DELETE FROM produtos " +
-                "WHERE id_produto = ? ;";
+                "WHERE hash = ? ;";
 
         int affectedrows = 0;
 
@@ -145,7 +143,7 @@ public class ProdutoDAO {
             Connection conn = PostgreSQLJDBC.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(1, id_produto);
+            pstmt.setObject(1,hash);
 
             affectedrows = pstmt.executeUpdate();
 
@@ -160,11 +158,11 @@ public class ProdutoDAO {
 
     }
 
-    public boolean updateByKey(int id_produto, String key, String value) {
+    public boolean updateByKey(UUID hash, String key, String value) {
 
         String sql = "UPDATE produtos " +
                 "SET " + key + " = ?, dtupdate = ? " +
-                "WHERE id_produto = " + id_produto  + ";";
+                "WHERE hash = '" + hash  + "' ;";
 
         int affectedrows = 0;
 
@@ -188,11 +186,11 @@ public class ProdutoDAO {
 
     }
 
-    public boolean updateByKey(int id_produto, String key, int value) {
+    public boolean updateByKey(UUID hash, String key, int value) {
 
         String sql = "UPDATE produtos " +
                 "SET " + key + " = ?, dtupdate = ? " +
-                "WHERE id_produto = " + id_produto  + ";";
+                "WHERE hash = '" + hash + "' ;";
 
         int affectedrows = 0;
 
@@ -218,11 +216,11 @@ public class ProdutoDAO {
 
     }
 
-    public boolean updateByKey(int id_produto, String key, double value) {
+    public boolean updateByKey(UUID hash, String key, double value) {
 
         String sql = "UPDATE produtos " +
                 "SET " + key + " = ?, dtupdate = ? "+
-                "WHERE id_produto = " + id_produto  + ";";
+                "WHERE hash = '" + hash  + "' ;";
 
         int affectedrows = 0;
 
