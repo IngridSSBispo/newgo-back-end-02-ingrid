@@ -47,32 +47,37 @@ public class CreateProduct extends HttpServlet {
         if (quantidade != null)
             quantidade_convertida = Integer.parseInt(quantidade);
 
-
-        Produto produto = new Produto(
-                nome,
-                descricao,
-                ean13,
-                preco_convertido,
-                quantidade_convertida,
-                estoque_min_convertido
-        );
-
-        ProdutoDAO produtodao = new ProdutoDAO();
-
-        boolean existNome = produtodao.checkIfExists("nome", nome);
-        boolean existEan13 = produtodao.checkIfExists("ean13", ean13);
-
-        if (existNome || existEan13) {
-            writer.println("Produto ja foi cadastrado anteriormente!");
+        if (nome == null || nome.isEmpty()) {
+            writer.println("O campo nome nao pode ser nulo ou vazio");
         } else {
-            boolean success = produtodao.createProduct(produto);
-            String result = new Gson().toJson(produto);
+            Produto produto = new Produto(
+                    nome,
+                    descricao,
+                    ean13,
+                    preco_convertido,
+                    quantidade_convertida,
+                    estoque_min_convertido
+            );
 
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+            ProdutoDAO produtodao = new ProdutoDAO();
 
-            writer.print(result);
-            writer.flush();
+            boolean existNome = produtodao.checkIfExists("nome", nome);
+            boolean existEan13 = produtodao.checkIfExists("ean13", ean13);
+
+            if (existNome || existEan13) {
+                writer.println("Produto ja foi cadastrado anteriormente!");
+            } else {
+                boolean success = produtodao.createProduct(produto);
+                String result = new Gson().toJson(produto);
+
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+
+                writer.print(result);
+                writer.flush();
+            }
+
+
         }
 
 
