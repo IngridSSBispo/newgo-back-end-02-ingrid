@@ -1,4 +1,5 @@
 package br.com.desafiobackend;
+import com.google.gson.Gson;
 import dao.ProdutoDAO;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +19,20 @@ public class DeleteProduct extends HttpServlet {
 
         ProdutoDAO produtodao = new ProdutoDAO();
         boolean success = produtodao.deleteProduct(hash);
-
+        String msg = "";
         if (success){
-            writer.println("Produto excluido com sucesso");
+            msg = "Produto excluido com sucesso";
         }else{
-            writer.println("Produto nao existe!");
+            msg = "Produto nao existe!";
         }
 
+        String result = new Gson().toJson(msg);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        writer.print(result);
+        writer.flush();
 
     }
 
