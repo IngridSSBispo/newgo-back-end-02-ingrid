@@ -83,7 +83,7 @@ public class ProdutoDAO {
             stmt.setDouble(5, produto.getPreco());
             stmt.setInt(6,produto.getQuantidade());
             stmt.setInt(7, produto.getEstoque_min());
-            stmt.setBoolean(8, true);
+            stmt.setBoolean(8, false);
 
 
 
