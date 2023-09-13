@@ -1,5 +1,7 @@
 package br.com.desafiobackend;
+
 import dao.ProdutoDAO;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,17 +36,24 @@ public class UpdateProduct extends HttpServlet {
 
         }
 
-        // Não permitir alterar as informações de id, hash, nome, ean13, dtcreate, dtupdate.
 
+        if (IsProductAtivo(hash)) {
+            updateByKey(hash, "descricao", descricao);
+            updateByKey(hash, "preco", precoConvertido);
+            updateByKey(hash, "quantidade", quantidadeConvertida);
+            updateByKey(hash, "estoque_min", estoque_minConvertido);
 
-        updateByKey(hash, "descricao", descricao);
-        updateByKey(hash, "preco", precoConvertido);
-        updateByKey(hash, "quantidade", quantidadeConvertida);
-        updateByKey(hash, "estoque_min", estoque_minConvertido);
+            writer.println("Produto alterado com sucesso");
 
-        writer.println("Produto alterado com sucesso");
+        } else {
+            writer.println("Produto esta inativo e nao pode ser atualizado.");
+        }
 
+    }
 
+    protected boolean IsProductAtivo(UUID hash) {
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        return produtoDAO.IsProductAtivo(hash);
     }
 
     protected void updateByKey(UUID hash, String key, String value) {
