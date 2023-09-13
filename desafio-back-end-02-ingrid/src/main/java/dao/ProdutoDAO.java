@@ -1,8 +1,6 @@
 package dao;
-
 import dao.conn.PostgreSQLJDBC;
 import produtos.Produto;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -93,7 +91,8 @@ public class ProdutoDAO {
             conn.close();
 
         } catch (Exception e) {
-            System.out.println("Erro IsProductAtivo: " + e);
+            throw new RuntimeException("Erro IsProductAtivo: " + e);
+
         }
 
 
@@ -138,43 +137,10 @@ public class ProdutoDAO {
             success = true;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Create Product: " + e);
         }
 
         return success;
-    }
-
-    public boolean updateProduct(int hash, Produto produto) {
-        boolean result = false;
-        String sql = "UPDATE produtos " +
-                "SET  nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=?, dtupdate =? " +
-                "WHERE hash = " + hash + ";";
-
-        int affectedrows = 0;
-
-        try {
-            Connection conn = PostgreSQLJDBC.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-
-            pstmt.setString(1, produto.getNome());
-            pstmt.setString(2, produto.getDescricao());
-            pstmt.setString(3, produto.getEan13());
-            pstmt.setDouble(4, produto.getPreco());
-            pstmt.setInt(5, produto.getQuantidade());
-            pstmt.setInt(6, produto.getEstoque_min());
-            pstmt.setTimestamp(7, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
-
-            affectedrows = pstmt.executeUpdate();
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        if (affectedrows > 0)
-            return true;
-        else
-            return false;
-
     }
 
     public boolean deleteProduct(UUID hash) {
