@@ -1,40 +1,51 @@
 package dao;
+
 import dao.conn.PostgreSQLJDBC;
 import produtos.Produto;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
-
 public class ProdutoDAO {
+    public ArrayList<Produto> getAllProducts() {
+        ArrayList<Produto> result = new ArrayList<>();
+        try {
+            String sql = "select * from produtos order by dtcreate desc;";
+            Connection conn = PostgreSQLJDBC.getConnection();
+            conn.setAutoCommit(false);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
+            while (rs.next()) {
+                Produto produto = new Produto(
+                        rs.getString("nome"),
+                        rs.getString("descricao"),
+                        rs.getString("ean13"),
+                        rs.getDouble("preco"),
+                        rs.getInt("quantidade"),
+                        rs.getInt("estoque_min")
+                );
 
-    public String getAllProducts()  {
-        String result = "";
-       try {
-           String sql = "select * from produtos;";
-           Connection conn = PostgreSQLJDBC.getConnection();
-           conn.setAutoCommit(false);
-           Statement stmt = conn.createStatement();
-           ResultSet rs = stmt.executeQuery(sql);
+                produto.setId(rs.getInt("id_produto"));
+                produto.setLativo(rs.getBoolean("lativo"));
+                result.add(produto);
 
-            while (rs.next()){
-                result = rs.getString("nome");
             }
 
+            rs.close();
+            stmt.close();
+            conn.close();
 
-           rs.close();
-           stmt.close();
-           conn.close();
-
-       } catch (Exception e){
-           e.printStackTrace();
-       }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return result;
     }
 
-    public boolean checkIfExists(String key,String value){
+    public boolean checkIfExists(String key, String value) {
         int quantidade = 0;
         try {
             String sql = "select count(*) as total from produtos where " + key + " = '" + value + "'; ";
@@ -44,7 +55,7 @@ public class ProdutoDAO {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
-            while (rs.next()){
+            while (rs.next()) {
                 quantidade = rs.getInt("total");
             }
 
@@ -52,17 +63,44 @@ public class ProdutoDAO {
             stmt.close();
             conn.close();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if(quantidade > 0)
+        if (quantidade > 0)
             return true;
         else
             return false;
     }
 
-    public boolean createProduct(Produto produto){
+    public boolean IsProductAtivo(UUID hash) {
+        boolean result = false;
+
+        String sql = "select lativo from produtos where hash = '" + hash + "';";
+
+        try {
+
+            Connection conn = PostgreSQLJDBC.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                result = rs.getBoolean("lativo");
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println("Erro IsProductAtivo: " + e);
+        }
+
+
+        return result;
+    }
+
+    public boolean createProduct(Produto produto) {
         boolean success = false;
 
         try {
@@ -81,28 +119,27 @@ public class ProdutoDAO {
             stmt.setString(3, produto.getDescricao());
             stmt.setString(4, produto.getEan13());
             stmt.setDouble(5, produto.getPreco());
-            stmt.setInt(6,produto.getQuantidade());
+            stmt.setInt(6, produto.getQuantidade());
             stmt.setInt(7, produto.getEstoque_min());
             stmt.setBoolean(8, false);
 
 
-
             stmt.executeUpdate();
-            
+
             success = true;
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return success;
     }
 
-    public boolean updateProduct(int hash,Produto produto){
+    public boolean updateProduct(int hash, Produto produto) {
         boolean result = false;
         String sql = "UPDATE produtos " +
                 "SET  nome=?, descricao=?, ean13=?, preco=?, quantidade=?, estoque_min=?, dtupdate =? " +
-                "WHERE hash = " + hash  + ";";
+                "WHERE hash = " + hash + ";";
 
         int affectedrows = 0;
 
@@ -110,12 +147,12 @@ public class ProdutoDAO {
             Connection conn = PostgreSQLJDBC.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1,produto.getNome());
-            pstmt.setString(2,produto.getDescricao());
-            pstmt.setString(3,produto.getEan13());
-            pstmt.setDouble(4,produto.getPreco());
-            pstmt.setInt(5,produto.getQuantidade());
-            pstmt.setInt(6,produto.getEstoque_min());
+            pstmt.setString(1, produto.getNome());
+            pstmt.setString(2, produto.getDescricao());
+            pstmt.setString(3, produto.getEan13());
+            pstmt.setDouble(4, produto.getPreco());
+            pstmt.setInt(5, produto.getQuantidade());
+            pstmt.setInt(6, produto.getEstoque_min());
             pstmt.setTimestamp(7, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
 
             affectedrows = pstmt.executeUpdate();
@@ -131,7 +168,7 @@ public class ProdutoDAO {
 
     }
 
-    public boolean deleteProduct(UUID hash){
+    public boolean deleteProduct(UUID hash) {
 
         boolean result = false;
         String sql = "DELETE FROM produtos " +
@@ -143,7 +180,7 @@ public class ProdutoDAO {
             Connection conn = PostgreSQLJDBC.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setObject(1,hash);
+            pstmt.setObject(1, hash);
 
             affectedrows = pstmt.executeUpdate();
 
@@ -162,7 +199,7 @@ public class ProdutoDAO {
 
         String sql = "UPDATE produtos " +
                 "SET " + key + " = ?, dtupdate = ? " +
-                "WHERE hash = '" + hash  + "' ;";
+                "WHERE hash = '" + hash + "' ;";
 
         int affectedrows = 0;
 
@@ -219,8 +256,8 @@ public class ProdutoDAO {
     public boolean updateByKey(UUID hash, String key, double value) {
 
         String sql = "UPDATE produtos " +
-                "SET " + key + " = ?, dtupdate = ? "+
-                "WHERE hash = '" + hash  + "' ;";
+                "SET " + key + " = ?, dtupdate = ? " +
+                "WHERE hash = '" + hash + "' ;";
 
         int affectedrows = 0;
 
