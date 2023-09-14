@@ -7,19 +7,19 @@
 
   <servlet>
     <servlet-name>listProducts</servlet-name>
-    <servlet-class>br.com.desafiobackend.ListProducts</servlet-class>
+    <servlet-class>application.ListProducts</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>createProduct</servlet-name>
-    <servlet-class>br.com.desafiobackend.CreateProduct</servlet-class>
+    <servlet-class>application.CreateProduct</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>deleteProduct</servlet-name>
-    <servlet-class>br.com.desafiobackend.DeleteProduct</servlet-class>
+    <servlet-class>application.DeleteProduct</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>updateProduct</servlet-name>
-    <servlet-class>br.com.desafiobackend.UpdateProduct</servlet-class>
+    <servlet-class>application.UpdateProduct</servlet-class>
   </servlet>
 
   <servlet-mapping>

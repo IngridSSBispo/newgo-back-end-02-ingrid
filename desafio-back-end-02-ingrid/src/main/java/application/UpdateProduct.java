@@ -1,4 +1,4 @@
-package br.com.desafiobackend;
+package application;
 import infrastructure.ProdutoDAO;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
