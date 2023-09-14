@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "13cddcbe-67aa-4506-b826-cdf09a480305",
+		"name": "new_go_backend_02",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29618157"
+	},
+	"item": [
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Detergente\",\r\n    \"descricao\": \"Detergente YPE\",\r\n    \"ean13\": \"365465465161\",\r\n    \"preco\": \"2,39\",\r\n    \"quantidade\": \"100\",\r\n    \"estoque_min\": \"50\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/desafio-back-end-02-ingrid/createProducts?nome=Fubá&descricao=mimoso&ean13=45577851541&preco=4.50&quantidade=50&estoque_min=20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"desafio-back-end-02-ingrid",
+						"createProducts"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "Fubá"
+						},
+						{
+							"key": "descricao",
+							"value": "mimoso"
+						},
+						{
+							"key": "ean13",
+							"value": "45577851541"
+						},
+						{
+							"key": "preco",
+							"value": "4.50"
+						},
+						{
+							"key": "quantidade",
+							"value": "50"
+						},
+						{
+							"key": "estoque_min",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/desafio-back-end-02-ingrid/deleteProducts?hash=7194a9d0-dcfd-4338-ad3f-c12bfbf47836",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"desafio-back-end-02-ingrid",
+						"deleteProducts"
+					],
+					"query": [
+						{
+							"key": "hash",
+							"value": "7194a9d0-dcfd-4338-ad3f-c12bfbf47836"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/desafio-back-end-02-ingrid/listProducts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"desafio-back-end-02-ingrid",
+						"listProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/desafio-back-end-02-ingrid/updateProducts?hash=bc29b5e5-d3fa-4722-9f24-085f9f4819f5&descricao=nordestao&preco=5.00&quantidade=100&estoque_min=50",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"desafio-back-end-02-ingrid",
+						"updateProducts"
+					],
+					"query": [
+						{
+							"key": "hash",
+							"value": "bc29b5e5-d3fa-4722-9f24-085f9f4819f5"
+						},
+						{
+							"key": "descricao",
+							"value": "nordestao"
+						},
+						{
+							"key": "preco",
+							"value": "5.00"
+						},
+						{
+							"key": "quantidade",
+							"value": "100"
+						},
+						{
+							"key": "estoque_min",
+							"value": "50"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
