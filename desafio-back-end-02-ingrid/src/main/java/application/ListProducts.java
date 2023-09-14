@@ -1,6 +1,6 @@
 package br.com.desafiobackend;
 import com.google.gson.Gson;
-import dao.ProdutoDAO;
+import infrastructure.ProdutoDAO;
 import produtos.Produto;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class ListProducts extends HttpServlet {
 

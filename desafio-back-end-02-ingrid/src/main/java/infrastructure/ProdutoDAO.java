@@ -1,6 +1,6 @@
-package dao;
-import dao.conn.PostgreSQLJDBC;
-import produtos.Produto;
+package infrastructure;
+import infrastructure.conn.PostgreSQLJDBC;
+import domain.Produto;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;

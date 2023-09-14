@@ -1,18 +1,15 @@
 package br.com.desafiobackend;
 
 import com.google.gson.Gson;
-import dao.ProdutoDAO;
+import infrastructure.ProdutoDAO;
 import produtos.Produto;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 
 public class CreateProduct extends HttpServlet {
