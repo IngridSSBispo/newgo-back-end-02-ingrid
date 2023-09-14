@@ -1,4 +1,4 @@
-package br.com.desafiobackend;
+package application;
 import com.google.gson.Gson;
 import infrastructure.ProdutoDAO;
 import javax.servlet.http.HttpServlet;

@@ -1,8 +1,8 @@
-package br.com.desafiobackend;
-
+package application;
 import com.google.gson.Gson;
+import domain.Produto;
 import infrastructure.ProdutoDAO;
-import produtos.Produto;
+
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
