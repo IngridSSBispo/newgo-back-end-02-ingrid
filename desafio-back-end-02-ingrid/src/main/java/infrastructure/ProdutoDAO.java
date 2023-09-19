@@ -1,9 +1,12 @@
 package infrastructure;
+
 import infrastructure.conn.PostgreSQLJDBC;
 import domain.Produto;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 
 public class ProdutoDAO {
@@ -168,6 +171,30 @@ public class ProdutoDAO {
         else
             return false;
 
+    }
+
+    public boolean changeStatus(UUID hash, boolean lativo) {
+        String sql = "UPDATE produtos " +
+                "SET lativo = ? " +
+                "WHERE hash = '" + hash + "' ;";
+
+        int affectedrows = 0;
+
+        try {
+            Connection conn = PostgreSQLJDBC.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            System.out.println(sql);
+
+            pstmt.setBoolean(1, lativo);
+            affectedrows = pstmt.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (affectedrows > 0)
+            return true;
+        else
+            return false;
     }
 
     public boolean updateByKey(UUID hash, String key, String value) {
