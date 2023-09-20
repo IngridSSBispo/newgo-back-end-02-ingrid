@@ -7,14 +7,21 @@ import domain.Produto;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 
 public class ProdutoDAO {
-    public ArrayList<Produto> getAllProducts() {
+    public ArrayList<Produto> getProducts(Status status) {
         ArrayList<Produto> result = new ArrayList<>();
         try {
-            String sql = "select * from produtos order by dtcreate desc;";
+            String filtro = "";
+            if( status == Status.TODOS){
+                filtro = "";
+            } else if(status == Status.ATIVOS){
+                filtro = " and lativo = true ";
+            } else if (status == Status.INATIVOS){
+                filtro = " and lativo = false ";
+            }
+            String sql = "select * from produtos where 1=1 " + filtro + " order by dtcreate desc;" ;
             Connection conn = PostgreSQLJDBC.getConnection();
             conn.setAutoCommit(false);
             Statement stmt = conn.createStatement();

@@ -1,7 +1,8 @@
 package application;
+
 import com.google.gson.Gson;
-import infrastructure.ProdutoDAO;
 import domain.Produto;
+import infrastructure.ProdutoDAO;
 import infrastructure.Status;
 
 import javax.servlet.http.HttpServlet;
@@ -11,13 +12,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class ListProducts extends HttpServlet {
 
-    @Override
-    protected void service( HttpServletRequest request, HttpServletResponse response) throws IOException {
+public class ListProductsActive extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
         ProdutoDAO dao = new ProdutoDAO();
-        ArrayList<Produto> allProducts = dao.getProducts(Status.TODOS);
+
+        ArrayList<Produto> allProducts = dao.getProducts(Status.ATIVOS);
         String result = new Gson().toJson(allProducts);
 
         response.setContentType("application/json");
@@ -26,7 +28,6 @@ public class ListProducts extends HttpServlet {
         writer.print(result);
         writer.flush();
 
+
     }
-
-
 }
