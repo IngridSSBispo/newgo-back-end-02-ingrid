@@ -3,6 +3,7 @@ package infrastructure;
 import application.dto.ChangeStatusDTO;
 import infrastructure.conn.PostgreSQLJDBC;
 import domain.Produto;
+import sun.misc.UUDecoder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ProdutoDAO {
 
             while (rs.next()) {
                 Produto produto = new Produto(
+                        UUID.fromString(rs.getObject("hash").toString()),
                         rs.getString("nome"),
                         rs.getString("descricao"),
                         rs.getString("ean13"),

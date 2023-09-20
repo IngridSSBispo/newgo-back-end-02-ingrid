@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 
 public class CreateProduct extends HttpServlet {
@@ -47,7 +48,9 @@ public class CreateProduct extends HttpServlet {
         if (nome == null || nome.isEmpty()) {
             writer.println("O campo nome nao pode ser nulo ou vazio");
         } else {
+            UUID hash = UUID.randomUUID();
             Produto produto = new Produto(
+                    hash,
                     nome,
                     descricao,
                     ean13,

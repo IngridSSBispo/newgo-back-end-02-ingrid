@@ -15,7 +15,7 @@ public class Produto {
     private LocalDateTime dtupdate;
     private Boolean lativo;
 
-    public Produto( String nome, String descricao, String ean13, double preco,
+    public Produto(UUID hash, String nome, String descricao, String ean13, double preco,
                    int quantidade, int estoque_min) {
 
         if(preco < 0 || quantidade < 0 || estoque_min < 0){
@@ -23,7 +23,7 @@ public class Produto {
         }
 
         this.id = id;
-        this.hash = UUID.randomUUID();
+        this.hash = hash;
         this.nome = nome;
         this.descricao = descricao;
         this.ean13 = ean13;
