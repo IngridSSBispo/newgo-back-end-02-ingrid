@@ -13,21 +13,10 @@ public class ProdutoDAO {
     public ArrayList<Produto> getProducts(Status status, UUID hash) {
         ArrayList<Produto> result = new ArrayList<>();
         try {
-            String filtro = "";
-            if( status == Status.TODOS){
-                filtro = "";
-            } else if(status == Status.ATIVOS){
-                filtro = " and lativo = true ";
-            } else if (status == Status.INATIVOS){
-                filtro = " and lativo = false ";
-            }
-            if(hash != null){
-                filtro = filtro + " and hash = '" + hash + "' ";
-            }
-
-
-            String sql = "select * from produtos where 1=1 " + filtro + " order by dtcreate desc;" ;
-            System.out.println(sql);
+            String sql = "select * " +
+                    "from produtos " +
+                    "where 1=1 " + getFilters(status, hash) +
+                    " order by dtcreate desc;";
 
             Connection conn = PostgreSQLJDBC.getConnection();
             conn.setAutoCommit(false);
@@ -60,6 +49,23 @@ public class ProdutoDAO {
         }
 
         return result;
+    }
+
+    private static String getFilters(Status status, UUID hash) {
+        String filtro = "";
+        if (status == Status.TODOS) {
+            filtro = "";
+        } else if (status == Status.ATIVOS) {
+            filtro = " and lativo = true ";
+        } else if (status == Status.INATIVOS) {
+            filtro = " and lativo = false ";
+        }
+
+        if (hash != null) {
+            filtro = filtro + " and hash = '" + hash + "' ";
+        }
+
+        return filtro;
     }
 
     public boolean checkIfExists(String key, String value) {
