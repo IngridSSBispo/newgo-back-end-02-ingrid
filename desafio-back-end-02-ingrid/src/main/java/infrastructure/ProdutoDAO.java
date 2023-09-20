@@ -10,7 +10,7 @@ import java.util.UUID;
 
 
 public class ProdutoDAO {
-    public ArrayList<Produto> getProducts(Status status) {
+    public ArrayList<Produto> getProducts(Status status, UUID hash) {
         ArrayList<Produto> result = new ArrayList<>();
         try {
             String filtro = "";
@@ -21,11 +21,19 @@ public class ProdutoDAO {
             } else if (status == Status.INATIVOS){
                 filtro = " and lativo = false ";
             }
+            if(hash != null){
+                filtro = filtro + " and hash = '" + hash + "' ";
+            }
+
+
             String sql = "select * from produtos where 1=1 " + filtro + " order by dtcreate desc;" ;
+            System.out.println(sql);
+
             Connection conn = PostgreSQLJDBC.getConnection();
             conn.setAutoCommit(false);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
+
 
             while (rs.next()) {
                 Produto produto = new Produto(
