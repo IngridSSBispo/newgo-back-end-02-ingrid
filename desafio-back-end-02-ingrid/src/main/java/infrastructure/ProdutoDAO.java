@@ -1,5 +1,6 @@
 package infrastructure;
 
+import application.dto.ChangeStatusDTO;
 import infrastructure.conn.PostgreSQLJDBC;
 import domain.Produto;
 
@@ -173,20 +174,20 @@ public class ProdutoDAO {
 
     }
 
-    public boolean changeStatus(UUID hash, boolean lativo) {
+    public boolean changeStatus(ChangeStatusDTO changeStatusDTO) {
         String sql = "UPDATE produtos " +
                 "SET lativo = ? " +
-                "WHERE hash = '" + hash + "' ;";
+                "WHERE hash = '" + changeStatusDTO.getHash() + "' ;";
 
         int affectedrows = 0;
 
         try {
             Connection conn = PostgreSQLJDBC.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            System.out.println(sql);
 
-            pstmt.setBoolean(1, lativo);
+            pstmt.setBoolean(1, changeStatusDTO.getLativo());
             affectedrows = pstmt.executeUpdate();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
