@@ -30,6 +30,11 @@
     <servlet-class>application.ListProductsActive</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>servletProducts</servlet-name>
+    <servlet-class>application.ServletProducts</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>listProducts</servlet-name>
     <url-pattern>/listProducts</url-pattern>
@@ -54,4 +59,8 @@
   <servlet-name>listProductsActive</servlet-name>
   <url-pattern>/listProductsActive</url-pattern>
 </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>servletProducts</servlet-name>
+    <url-pattern>/servletProducts</url-pattern>
+  </servlet-mapping>
 </web-app>
