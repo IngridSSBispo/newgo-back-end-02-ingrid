@@ -1,6 +1,8 @@
 package application;
+
 import application.actions.Delete;
 import application.actions.List;
+import application.actions.Update;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,24 +36,22 @@ public class ServletProducts extends HttpServlet {
 
     }
 
-    protected void doPut (HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//          ATUALIZAR | PUT    | /"SUA_COLECAO_NO_PLURAL"/{:id/hash}
         PrintWriter writer = response.getWriter();
 
-        writer.println("Aqui e o  metodo put");
+        Update updateProduct = new Update();
+
+        updateProduct.update(request, response);
 
     }
 
-
-
 }
+
 
 /*
 
-LER TODOS | GET    | /"SUA_COLECAO_NO_PLURAL" ok
 INSERIR   | POST   | /"SUA_COLECAO_NO_PLURAL"
-
 LER 1     | GET    | /"SUA_COLECAO_NO_PLURAL"/{:id/hash}
-
-ATUALIZAR | PUT    | /"SUA_COLECAO_NO_PLURAL"/{:id/hash}
 
  */
