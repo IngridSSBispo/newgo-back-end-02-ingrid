@@ -1,4 +1,4 @@
 package application.actions;
 
-public class CreateProduct {
+public class Create {
 }
