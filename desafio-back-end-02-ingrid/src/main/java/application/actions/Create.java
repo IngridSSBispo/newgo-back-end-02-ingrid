@@ -1,6 +1,8 @@
 package application.actions;
 
+import application.dto.CreateDTO;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import domain.Produto;
 import infrastructure.ProdutoDAO;
 
@@ -16,49 +18,35 @@ public class Create {
     public void create(HttpServletRequest request, HttpServletResponse response, PrintWriter writer) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = request.getReader();
+        Gson gson = new GsonBuilder().serializeNulls().create();
+
 
         String line;
         while ((line = reader.readLine()) != null) {
             sb.append(line);
         }
 
-        String nome = request.getParameter("nome");
-        String descricao = request.getParameter("descricao");
-        String ean13 = request.getParameter("ean13");
-        String preco = request.getParameter("preco");
-        String quantidade = request.getParameter("quantidade");
-        String estoque_min = request.getParameter("estoque_min");
-        int estoque_min_convertido = 0;
-        double preco_convertido = 0;
-        int quantidade_convertida = 0;
+        CreateDTO createDTO = gson.fromJson(sb.toString(),CreateDTO.class);
 
-        if (estoque_min != null)
-            estoque_min_convertido = Integer.parseInt(estoque_min);
-
-        if (preco != null) {
-            preco_convertido = Double.parseDouble(preco);
-        }
-        if (quantidade != null)
-            quantidade_convertida = Integer.parseInt(quantidade);
-
-        if (nome == null || nome.isEmpty()) {
+        if (createDTO.getNome() == null || createDTO.getNome().isEmpty()) {
             writer.println("O campo nome nao pode ser nulo ou vazio");
         } else {
             UUID hash = UUID.randomUUID();
             Produto produto = new Produto(
                     hash,
-                    nome,
-                    descricao,
-                    ean13,
-                    preco_convertido,
-                    quantidade_convertida,
-                    estoque_min_convertido
+                    createDTO.getNome(),
+                    createDTO.getDescricao(),
+                    createDTO.getEan13(),
+                    createDTO.getPreco_conertido(),
+                    createDTO.getQuantidade_convertida(),
+                    createDTO.getEstoue_min_convertido()
+
             );
 
             ProdutoDAO produtodao = new ProdutoDAO();
 
-            boolean existNome = produtodao.checkIfExists("nome", nome);
-            boolean existEan13 = produtodao.checkIfExists("ean13", ean13);
+            boolean existNome = produtodao.checkIfExists("nome", createDTO.getNome());
+            boolean existEan13 = produtodao.checkIfExists("ean13", createDTO.getEan13());
 
             if (existNome || existEan13) {
                 writer.println("Produto ja foi cadastrado anteriormente!");
