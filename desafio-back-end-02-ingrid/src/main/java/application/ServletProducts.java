@@ -17,7 +17,7 @@ public class ServletProducts extends HttpServlet {
         PrintWriter writer = response.getWriter();
         List ListProducts = new List();
 
-        ListProducts.list(response, writer);
+        ListProducts.list(request, response, writer);
 
     }
 
