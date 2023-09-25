@@ -1,4 +1,4 @@
-package application;
+package application.old;
 import infrastructure.ProdutoDAO;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +10,11 @@ import java.util.UUID;
 public class UpdateProduct extends HttpServlet {
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        update(request, response);
+
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UUID hash = UUID.fromString(request.getParameter("hash"));
         String descricao = request.getParameter("descricao");
         String preco = request.getParameter("preco");
@@ -46,7 +51,6 @@ public class UpdateProduct extends HttpServlet {
         } else {
             writer.println("Produto esta inativo e nao pode ser atualizado.");
         }
-
     }
 
     protected boolean IsProductAtivo(UUID hash) {

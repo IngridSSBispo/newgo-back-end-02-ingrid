@@ -7,19 +7,19 @@
 
   <servlet>
     <servlet-name>listProducts</servlet-name>
-    <servlet-class>application.ListProducts</servlet-class>
+    <servlet-class>application.old.ListProducts</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>createProduct</servlet-name>
-    <servlet-class>application.CreateProduct</servlet-class>
+    <servlet-class>application.old.CreateProduct</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>deleteProduct</servlet-name>
-    <servlet-class>application.DeleteProduct</servlet-class>
+    <servlet-class>application.old.DeleteProduct</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>updateProduct</servlet-name>
-    <servlet-class>application.UpdateProduct</servlet-class>
+    <servlet-class>application.old.UpdateProduct</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>changeStatus</servlet-name>
@@ -27,7 +27,7 @@
   </servlet>
   <servlet>
     <servlet-name>listProductsActive</servlet-name>
-    <servlet-class>application.ListProductsActive</servlet-class>
+    <servlet-class>application.old.ListProductsActive</servlet-class>
   </servlet>
 
   <servlet>
