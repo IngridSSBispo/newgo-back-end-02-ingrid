@@ -37,9 +37,9 @@ public class Create {
                     createDTO.getNome(),
                     createDTO.getDescricao(),
                     createDTO.getEan13(),
-                    createDTO.getPreco_conertido(),
-                    createDTO.getQuantidade_convertida(),
-                    createDTO.getEstoue_min_convertido()
+                    createDTO.getPreco(),
+                    createDTO.getQuantidade(),
+                    createDTO.getEstoque_min()
 
             );
 
