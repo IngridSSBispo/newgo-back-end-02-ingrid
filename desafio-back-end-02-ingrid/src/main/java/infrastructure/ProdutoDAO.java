@@ -1,23 +1,33 @@
 package infrastructure;
+
+import application.dto.ChangeStatusDTO;
 import infrastructure.conn.PostgreSQLJDBC;
 import domain.Produto;
+import sun.misc.UUDecoder;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
 
 public class ProdutoDAO {
-    public ArrayList<Produto> getAllProducts() {
+    public ArrayList<Produto> getProducts(Status status, UUID hash) {
         ArrayList<Produto> result = new ArrayList<>();
         try {
-            String sql = "select * from produtos order by dtcreate desc;";
+            String sql = "select * " +
+                    "from produtos " +
+                    "where 1=1 " + getFilters(status, hash) +
+                    " order by dtcreate desc;";
+
             Connection conn = PostgreSQLJDBC.getConnection();
             conn.setAutoCommit(false);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
+
             while (rs.next()) {
                 Produto produto = new Produto(
+                        UUID.fromString(rs.getObject("hash").toString()),
                         rs.getString("nome"),
                         rs.getString("descricao"),
                         rs.getString("ean13"),
@@ -41,6 +51,23 @@ public class ProdutoDAO {
         }
 
         return result;
+    }
+
+    private static String getFilters(Status status, UUID hash) {
+        String filtro = "";
+        if (status == Status.TODOS) {
+            filtro = "";
+        } else if (status == Status.ATIVOS) {
+            filtro = " and lativo = true ";
+        } else if (status == Status.INATIVOS) {
+            filtro = " and lativo = false ";
+        }
+
+        if (hash != null) {
+            filtro = filtro + " and hash = '" + hash + "' ";
+        }
+
+        return filtro;
     }
 
     public boolean checkIfExists(String key, String value) {
@@ -168,6 +195,30 @@ public class ProdutoDAO {
         else
             return false;
 
+    }
+
+    public boolean changeStatus(ChangeStatusDTO changeStatusDTO) {
+        String sql = "UPDATE produtos " +
+                "SET lativo = ? " +
+                "WHERE hash = '" + changeStatusDTO.getHash() + "' ;";
+
+        int affectedrows = 0;
+
+        try {
+            Connection conn = PostgreSQLJDBC.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setBoolean(1, changeStatusDTO.getLativo());
+            affectedrows = pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (affectedrows > 0)
+            return true;
+        else
+            return false;
     }
 
     public boolean updateByKey(UUID hash, String key, String value) {

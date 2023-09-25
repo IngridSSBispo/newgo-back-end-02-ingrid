@@ -1,22 +1,19 @@
-package application;
+package application.actions;
+
 import com.google.gson.Gson;
 import domain.Produto;
 import infrastructure.ProdutoDAO;
 
-
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
+public class Create {
 
-public class CreateProduct extends HttpServlet {
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        PrintWriter writer = response.getWriter();
-
+    public void create(HttpServletRequest request, HttpServletResponse response, PrintWriter writer) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = request.getReader();
 
@@ -47,7 +44,9 @@ public class CreateProduct extends HttpServlet {
         if (nome == null || nome.isEmpty()) {
             writer.println("O campo nome nao pode ser nulo ou vazio");
         } else {
+            UUID hash = UUID.randomUUID();
             Produto produto = new Produto(
+                    hash,
                     nome,
                     descricao,
                     ean13,
@@ -74,11 +73,7 @@ public class CreateProduct extends HttpServlet {
                 writer.flush();
             }
 
-
         }
-
-
     }
-
 
 }
