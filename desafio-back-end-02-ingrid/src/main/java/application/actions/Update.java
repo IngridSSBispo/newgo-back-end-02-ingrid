@@ -49,7 +49,7 @@ public class Update {
 
     protected boolean IsProductAtivo(UUID hash) {
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        return produtoDAO.IsProductAtivo(hash);
+        return produtoDAO.isProductAtivo(hash);
     }
 
     protected void updateByKey(UUID hash, String key, String value) {
