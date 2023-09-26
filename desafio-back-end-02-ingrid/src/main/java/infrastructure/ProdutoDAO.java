@@ -3,7 +3,6 @@ package infrastructure;
 import application.dto.ChangeStatusDTO;
 import infrastructure.conn.PostgreSQLJDBC;
 import domain.Produto;
-import sun.misc.UUDecoder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,19 +10,18 @@ import java.util.UUID;
 
 
 public class ProdutoDAO {
-    public ArrayList<Produto> getProducts(Status status, UUID hash) {
+    public ArrayList<Produto> getProducts(Status status, UUID hash, int estoqueMin) {
         ArrayList<Produto> result = new ArrayList<>();
         try {
             String sql = "select * " +
                     "from produtos " +
-                    "where 1=1 " + getFilters(status, hash) +
+                    "where true " + getFilters(status, hash, estoqueMin) +
                     " order by dtcreate desc;";
 
             Connection conn = PostgreSQLJDBC.getConnection();
             conn.setAutoCommit(false);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-
 
             while (rs.next()) {
                 Produto produto = new Produto(
@@ -53,7 +51,7 @@ public class ProdutoDAO {
         return result;
     }
 
-    private static String getFilters(Status status, UUID hash) {
+    private static String getFilters(Status status, UUID hash, int estoqueMin) {
         String filtro = "";
         if (status == Status.TODOS) {
             filtro = "";
@@ -65,6 +63,10 @@ public class ProdutoDAO {
 
         if (hash != null) {
             filtro = filtro + " and hash = '" + hash + "' ";
+        }
+
+        if (estoqueMin != -1) {
+            filtro = filtro + " and estoque_min < " + estoqueMin + " ";
         }
 
         return filtro;
@@ -98,7 +100,7 @@ public class ProdutoDAO {
             return false;
     }
 
-    public boolean IsProductAtivo(UUID hash) {
+    public boolean isProductAtivo(UUID hash) {
         boolean result = false;
 
         String sql = "select lativo from produtos where hash = '" + hash + "';";
