@@ -34,7 +34,7 @@ public class Update {
 
         }
 
-        if (IsProductAtivo(hash)) {
+        if (isProductAtivo(hash)) {
             updateByKey(hash, "descricao", descricao);
             updateByKey(hash, "preco", precoConvertido);
             updateByKey(hash, "quantidade", quantidadeConvertida);
@@ -47,7 +47,7 @@ public class Update {
         }
     }
 
-    protected boolean IsProductAtivo(UUID hash) {
+    protected boolean isProductAtivo(UUID hash) {
         ProdutoDAO produtoDAO = new ProdutoDAO();
         return produtoDAO.isProductAtivo(hash);
     }
