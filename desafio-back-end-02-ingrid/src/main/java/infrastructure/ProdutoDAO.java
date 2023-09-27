@@ -3,7 +3,6 @@ package infrastructure;
 import application.dto.ChangeStatusDTO;
 import infrastructure.conn.PostgreSQLJDBC;
 import domain.Produto;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -100,7 +99,7 @@ public class ProdutoDAO {
             return false;
     }
 
-    public boolean isProductAtivo(UUID hash) {
+    public boolean isProductActive(UUID hash) {
         boolean result = false;
 
         String sql = "select lativo from produtos where hash = '" + hash + "';";
@@ -123,8 +122,6 @@ public class ProdutoDAO {
             throw new RuntimeException("Erro IsProductAtivo: " + e);
 
         }
-
-
         return result;
     }
 

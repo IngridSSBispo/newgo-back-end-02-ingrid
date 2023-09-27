@@ -5,7 +5,6 @@ import application.dto.ChangeStatusDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import infrastructure.ProdutoDAO;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +25,7 @@ public class ChangeStatus extends HttpServlet {
 
     }
 
+    // verificar metodo de alteracao de status
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
 
