@@ -26,7 +26,7 @@ public class Create {
             sb.append(line);
         }
 
-        CreateDTO createDTO = gson.fromJson(sb.toString(),CreateDTO.class);
+        CreateDTO createDTO = gson.fromJson(sb.toString(), CreateDTO.class);
 
         if (createDTO.getNome() == null || createDTO.getNome().isEmpty()) {
             writer.println("O campo nome nao pode ser nulo ou vazio");

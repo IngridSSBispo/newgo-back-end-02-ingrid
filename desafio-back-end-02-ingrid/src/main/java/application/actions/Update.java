@@ -34,7 +34,7 @@ public class Update {
 
         }
 
-        if (IsProductAtivo(hash)) {
+        if (isProductActive(hash)) {
             updateByKey(hash, "descricao", descricao);
             updateByKey(hash, "preco", precoConvertido);
             updateByKey(hash, "quantidade", quantidadeConvertida);
@@ -47,9 +47,9 @@ public class Update {
         }
     }
 
-    protected boolean IsProductAtivo(UUID hash) {
+    protected boolean isProductActive(UUID hash) {
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        return produtoDAO.IsProductAtivo(hash);
+        return produtoDAO.isProductActive(hash);
     }
 
     protected void updateByKey(UUID hash, String key, String value) {

@@ -17,7 +17,7 @@ public class ListProducts extends HttpServlet {
     protected void service( HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
         ProdutoDAO dao = new ProdutoDAO();
-        ArrayList<Produto> allProducts = dao.getProducts(Status.TODOS, null);
+        ArrayList<Produto> allProducts = dao.getProducts(Status.TODOS, null,-1);
         String result = new Gson().toJson(allProducts);
 
         response.setContentType("application/json");
