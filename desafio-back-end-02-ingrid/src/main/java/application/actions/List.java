@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import domain.Produto;
 import infrastructure.ProdutoDAO;
 import infrastructure.Status;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -61,7 +62,10 @@ public class List {
 
         EstoqueMinDTO estoqueMin = gson.fromJson(sb.toString(), EstoqueMinDTO.class);
 
-        ArrayList<Produto> allProducts = dao.getProducts(Status.TODOS, null, estoqueMin.getEstoqueMin());
+        // RN017 - Consulta de produtos com estoque abaixo do mínimo deve considerar somente produtos  ativos
+        //Traz somente os ativos, mas se colocar outro status, ele traz ativos tbm.
+
+        ArrayList<Produto> allProducts = dao.getProducts(Status.ATIVOS, null, estoqueMin.getEstoqueMin());
 
         String result = new Gson().toJson(allProducts);
 
