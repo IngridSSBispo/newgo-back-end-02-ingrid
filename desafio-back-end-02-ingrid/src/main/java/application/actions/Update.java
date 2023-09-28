@@ -1,6 +1,7 @@
 package application.actions;
 
 import infrastructure.ProdutoDAO;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -73,5 +74,9 @@ public class Update {
 
         if (value > 0)
             produtodao.updateByKey(hash, key, value);
+    }
+
+    protected void updatePriceBatch(HttpServletRequest request, HttpServletResponse response) {
+
     }
 }
