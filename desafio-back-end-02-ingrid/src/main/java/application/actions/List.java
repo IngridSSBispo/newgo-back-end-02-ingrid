@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import domain.Produto;
 import infrastructure.ProdutoDAO;
-import infrastructure.Status;
+import infrastructure.enums.Status;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
