@@ -3,6 +3,8 @@ package infrastructure;
 import application.dto.ChangeStatusDTO;
 import infrastructure.conn.PostgreSQLJDBC;
 import domain.Produto;
+import infrastructure.enums.Status;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -73,6 +75,8 @@ public class ProdutoDAO {
 
     public boolean checkIfExists(String key, String value) {
         int quantidade = 0;
+
+        // todo corrigir
         try {
             String sql = "select count(*) as total from produtos where " + key + " = '" + value + "'; ";
 
@@ -308,3 +312,5 @@ public class ProdutoDAO {
 
     }
 }
+
+
