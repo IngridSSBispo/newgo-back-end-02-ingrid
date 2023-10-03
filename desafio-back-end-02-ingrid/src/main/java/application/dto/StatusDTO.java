@@ -1,6 +1,6 @@
 package application.dto;
 
-import infrastructure.Status;
+import infrastructure.enums.Status;
 
 import java.util.UUID;
 

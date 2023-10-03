@@ -2,7 +2,7 @@ package application.old;
 import com.google.gson.Gson;
 import infrastructure.ProdutoDAO;
 import domain.Produto;
-import infrastructure.Status;
+import infrastructure.enums.Status;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

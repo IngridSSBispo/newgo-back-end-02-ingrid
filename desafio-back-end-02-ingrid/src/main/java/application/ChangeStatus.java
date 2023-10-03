@@ -25,7 +25,7 @@ public class ChangeStatus extends HttpServlet {
 
     }
 
-    // verificar metodo de alteracao de status
+    //  metodo de alteracao de status
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
 
