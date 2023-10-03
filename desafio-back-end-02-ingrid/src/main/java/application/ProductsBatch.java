@@ -1,6 +1,8 @@
 package application;
 
 import application.actions.Create;
+import application.actions.Update;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +11,7 @@ import java.io.PrintWriter;
 
 public class ProductsBatch  extends HttpServlet {
 
-    // criar em lote -
+    // criar em lote
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         PrintWriter writer = response.getWriter();
@@ -24,6 +26,11 @@ public class ProductsBatch  extends HttpServlet {
     // Criar recurso para atualizar o preço de produtos em lote, por valor fixo, aumentar ou diminuir  um valor e aumentar ou diminuir percentualmente.
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        PrintWriter writer = response.getWriter();
+
+        Update updatePriceBatch = new Update();
+
+        updatePriceBatch.update(request, response);
 
     }
 

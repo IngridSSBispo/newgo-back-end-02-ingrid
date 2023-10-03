@@ -1,12 +1,16 @@
 package application.actions;
 
+import application.dto.UpdateBatchDTO;
+import domain.Produto;
 import infrastructure.ProdutoDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.UUID;
+
 
 public class Update {
 
@@ -76,7 +80,38 @@ public class Update {
             produtodao.updateByKey(hash, key, value);
     }
 
-    protected void updatePriceBatch(HttpServletRequest request, HttpServletResponse response) {
+   /* protected void updatePriceBatch(HttpServletRequest request, HttpServletResponse response, List<UpdateBatchDTO> updates, List<Produto> produtos) {
 
+
+
+
+        for (UpdateBatchDTO update : updates) {
+            for (Produto produto : produtos) {
+                if (update.getHash().equals(produto.getHash())) {
+                    switch (update.getOperation()) {
+                        case AUMENTAR_VALOR_FIXO:
+                            produto.setPreco(produto.getPreco() + update.getValor());
+                            break;
+                        case DIMINUIR_VALOR_FIXO:
+                            produto.setPreco(produto.getPreco() - update.getValor());
+                            break;
+                        case AUMENTAR_PORCENTAGEM:
+                            produto.setPreco(produto.getPreco() * (1 + update.getValor() / 100));
+                        case DIMINUIR_PORCENTAGEM:
+                            produto.setPreco(produto.getPreco() * (1 - update.getValor() / 100));
+                            break;
+                        default:
+
+                            break;
+                    }
+                }
+            }
+        }
     }
+}
+
+
+
+    */
+
 }
