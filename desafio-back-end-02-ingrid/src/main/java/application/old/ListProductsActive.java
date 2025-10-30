@@ -43,7 +43,7 @@ public class ListProductsActive extends HttpServlet {
             hash = hashDTO.getHash();
         }
 
-        ArrayList<Produto> allProducts = dao.getProducts(Status.ATIVOS, hash);
+        ArrayList<Produto> allProducts = dao.getProducts(Status.ATIVOS, hash,-1);
         String result = new Gson().toJson(allProducts);
 
         response.setContentType("application/json");

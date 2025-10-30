@@ -4,6 +4,7 @@ import application.actions.Create;
 import application.actions.Delete;
 import application.actions.List;
 import application.actions.Update;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ public class ServletProducts extends HttpServlet {
         PrintWriter writer = response.getWriter();
         List ListProducts = new List();
 
-        ListProducts.list(response, writer);
+        ListProducts.list(request, response, writer);
 
     }
 
@@ -27,7 +28,7 @@ public class ServletProducts extends HttpServlet {
 
         Create createProduct = new Create();
 
-        createProduct.create(request,response,writer);
+        createProduct.create(request, response, writer);
     }
 
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -51,7 +52,6 @@ public class ServletProducts extends HttpServlet {
     }
 
 }
-
 
 /*
 LER 1     | GET    | /"SUA_COLECAO_NO_PLURAL"/{:id/hash}

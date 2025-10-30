@@ -55,7 +55,7 @@ public class UpdateProduct extends HttpServlet {
 
     protected boolean IsProductAtivo(UUID hash) {
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        return produtoDAO.IsProductAtivo(hash);
+        return produtoDAO.isProductActive(hash);
     }
 
     protected void updateByKey(UUID hash, String key, String value) {
